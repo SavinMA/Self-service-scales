@@ -1,0 +1,79 @@
+﻿<Window x:Class="Metro_.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Metro_"
+        mc:Ignorable="d"
+        Title="Весы самообслуживания" Height="600" Width="1000">
+
+    <Window.Resources>
+        <DataTemplate x:Key="listTemplate">
+            <StackPanel Margin="5">
+                <Image Width="100" Height="100" Source="{Binding Path=ImagePath}" Stretch="Uniform" />
+                <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center" FontSize="20"/>
+                <TextBlock Text="{Binding Path=Price}" HorizontalAlignment="Center" FontSize="20"/>
+            </StackPanel>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="listPanelTemplate">
+            <WrapPanel/>
+        </ItemsPanelTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left" Width="100" HorizontalAlignment="Center">
+                <TextBlock Text="Покупатель" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal">
+                    <DockPanel Margin="5 2">
+                        <TextBlock Text="10 кг" DockPanel.Dock="Top" VerticalAlignment="Top"/>
+                        <TextBlock Text="0 кг" DockPanel.Dock="Bottom" VerticalAlignment="Bottom"/>
+                    </DockPanel>
+                    <Slider
+                    Orientation="Vertical" 
+                    MinHeight="100"
+                    ValueChanged="Slider_ValueChanged"
+                    Minimum="0"
+                    Maximum="10"
+                    />
+                </StackPanel>
+            </StackPanel>
+            
+            <DockPanel DockPanel.Dock="Right" >
+                <GroupBox FontFamily="Lumberjack" FontWeight="Bold" DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="30" BorderBrush="{x:Null}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="20 5" >
+                            <Label>Масса, кг</Label>
+                            <TextBlock 
+                                x:Name="Weight" 
+                                Text="0,000" 
+                                HorizontalAlignment="Center"
+                            />
+                        </StackPanel>
+                        <StackPanel Margin="20 5">
+                            <Label>Цена, руб/кг</Label>
+                            <TextBlock 
+                            Text="0,00" 
+                            x:Name="Price" 
+                            HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Margin="20 5">
+                            <Label>Стоимость, руб</Label>
+                            <TextBlock 
+                            Text="0,00" 
+                            x:Name="Cost" 
+                            HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Margin="20 5" Padding="5 0" Click="Print_Click">Печать чека</Button>
+                    </StackPanel>
+                </GroupBox>
+                <ListBox x:Name="productList" 
+                     DockPanel.Dock="Bottom"
+                     ItemTemplate="{StaticResource listTemplate}"
+                     ItemsPanel="{StaticResource listPanelTemplate}"
+                     SelectionChanged="ProductList_SelectionChanged"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="{x:Null}"/>
+            </DockPanel>
+        </DockPanel>
+    </Grid>
+</Window>
